@@ -1,4 +1,4 @@
-Proyecto realizado en *C#* con el IDE de desarrollo *Visual Studio* para el resutaurante Cajamarquino **Fárrgo 584**.
+Proyecto realizado en *C#* con el IDE de desarrollo *Visual Studio* para el restaurante  Cajamarquino **Fárrgo 584**.
 
 EL proyecto abarca el área de reservas para eventos y reserva de mesas bajo el patrón MVC.
 
