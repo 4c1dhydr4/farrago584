@@ -1,0 +1,123 @@
+﻿@model IEnumerable<FarragoWebApp.Models.TableReservation>
+
+@{
+    ViewBag.Title = "Reservaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reservaciones de Mesa</h2>
+
+<p>
+    @Html.ActionLink("Reservar Mesa", "Create")
+</p>
+<table class="table text-center" id="tableReservationList">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullHour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonsNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserObservations)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminObservations)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <h4>@Html.DisplayFor(modelItem => item.DateTime)</h4>
+            </td>
+            <td>
+                <h4>@Html.DisplayFor(modelItem => item.FullHour)</h4>
+            </td>
+            <td>
+                @{
+                    if (item.Status == "P")
+                    {
+                        <span class="text-primary">Reserva Pendiente</span>
+                    }
+                    else if (item.Status == "C")
+                    {
+                        <span class="text-warning">Reserva Cancelada</span>
+                    }
+                    else if (item.Status == "F")
+                    {
+                        <span class="text-danger">No Asistida</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Reserva Asistida</span>
+                    }
+                }
+            </td>
+            <td>
+                <h4>@Html.DisplayFor(modelItem => item.PersonsNumber)</h4>
+            </td>
+            <td>
+                @{
+                    if (item.Confirmed == "C")
+                    {
+                        <span class="text-success">Confirmada</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Por Confirmar</span>
+                    }
+                }
+            </td>
+            <td>
+                @FarragoWebApp.Controllers.TableReservationController.AdminContact((int)item.AdminId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserObservations)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdminObservations)
+            </td>
+            <td>
+                <table class="table">
+                    <tr>
+                        @{
+                            if (item.Status == "P")
+                            {
+                                <td>@Html.ActionLink("Modificar Reserva", "Edit", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })</td>
+                            }
+                        }
+                    </tr>
+                    <tr>
+                        <td>@Html.ActionLink("Detalles", "Details", new { id = item.id }, new { @class = "btn btn-primary btn-sm" })</td>
+                    </tr>
+                    <tr>
+                        @{
+                            if (item.Status == "P")
+                            {
+                                <td>@Html.ActionLink("Cancelar Reserva", "Cancel", new { id = item.id }, new { @class = "cancelBtn btn btn-danger btn-sm" })</td>
+                            }
+                        }
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,130 @@
+﻿@model FarragoWebApp.Models.LocalReservation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Detalle de Reservación</h2>
+
+<div>
+    <h4>Reservación para Evento RES  N°@Html.DisplayFor(model => model.id)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonsNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonsNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Confirmation)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.Confirmation == "N")
+                {
+                    <span class="text-danger">No Confirmado</span>
+                }
+                else
+                {
+                    <span class="text-success">Confirmado</span>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserObservation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserObservation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminObservation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminObservation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalPrice)
+        </dt>
+
+        <dd>
+            S/@Html.DisplayFor(model => model.FinalPrice).00
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.Status == "C")
+                {
+                    <span class="text-warning">Reserva Cancelada</span>
+                }
+                else if (Model.Status == "P")
+                {
+                    <span class="text-primary">Reserva Pendiente</span>
+                }
+                else if (Model.Status == "F")
+                {
+                    <span class="text-danger">Reserva no Asistida</span>
+                }
+                else
+                {
+                    <span class="text-success">Reserva Asistida</span>
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequirementsList)
+        </dt>
+
+        <dd>
+            <div class="col-md-6">
+                <table class="table">
+                    <tr class="text-warning">
+                        <td>Requerimiento</td>
+                        <td>Descripción</td>
+                        <td>Costo</td>
+                    </tr>
+                    @foreach (var req in Model.RequirementsList)
+                    {
+                        <tr>
+                            <td>@req.ReqName</td>
+                            <td>@req.Description</td>
+                            <td>S/@req.Cost.00</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Administración", "Dashboard", "Admin", "", new { @class = "btn btn-default" })
+</p>

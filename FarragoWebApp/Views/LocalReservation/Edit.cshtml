@@ -1,0 +1,71 @@
+﻿@model FarragoWebApp.Models.LocalReservation
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Modificar mi Reserva</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Reserva N° @Model.id</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PersonsNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PersonsNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PersonsNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserObservation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserObservation, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserObservation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <tr class="text-success">
+                <td>Requerimiento</td>
+                <td>Descripción</td>
+                <td>Costo</td>
+                <td></td>
+            </tr>
+            @foreach (var req in Model.RequirementsList.ToList())
+            {
+                <tr>
+                    <td>@req.ReqName</td>
+                    <td>@req.Description</td>
+                    <td>S/@req.Cost.00</td>
+                </tr>
+            }
+            <tr><td>@Html.ActionLink("Solicitar Cambio de Requerimientos", "Requirements", new { id = Model.id }, new { @class = "btn btn-warning btn-sm" })</td></tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Solicitar Cambio" class="btn btn-primary" />
+            @Html.ActionLink("Cancelar", "Index", "", new { @class = "btn btn-danger" })
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Mis Reservas", "Index", "", new { @class = "btn btn-default" })
+</div>

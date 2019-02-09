@@ -1,0 +1,52 @@
+﻿@model IEnumerable<FarragoWebApp.Models.Requirements>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="requirementList">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReqName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReqName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                S/ @Html.DisplayFor(modelItem => item.Cost).00
+            </td>
+            <td>
+                <table class="">
+                    <tr>
+                        <td>@Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })</td>
+                        <td>@Html.ActionLink("Eliminar", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Farrago584Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DNI" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CellphoneNumber" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="isSuperuser" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="isActive" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocalRequirements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocalReservation" Type="int" Nullable="false" />
+          <Property Name="Requirement" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocalReservation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PersonsNumber" Type="int" Nullable="false" />
+          <Property Name="Confirmation" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="AdminId" Type="int" />
+          <Property Name="UserObservation" Type="varchar" MaxLength="50" />
+          <Property Name="AdminObservation" Type="varchar" MaxLength="50" />
+          <Property Name="FinalPrice" Type="float" Nullable="false" />
+          <Property Name="Status" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requirements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Cost" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TableReservation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PersonsNumber" Type="int" Nullable="false" />
+          <Property Name="Confirmed" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="AdminId" Type="int" />
+          <Property Name="UserObservations" Type="varchar" MaxLength="300" />
+          <Property Name="AdminObservations" Type="varchar" MaxLength="300" />
+          <Property Name="Status" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Names" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DNI" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="BornDate" Type="date" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CellphoneNumber" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="ReservationsNumber" Type="smallint" Nullable="false" />
+          <Property Name="AssistedNumber" Type="smallint" Nullable="false" />
+          <Property Name="FaultsNumber" Type="smallint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LocalRequirements_LocalReservation">
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="1" />
+          <End Role="LocalRequirements" Type="Self.LocalRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocalReservation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalRequirements">
+              <PropertyRef Name="LocalReservation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalRequirements_Requirements">
+          <End Role="Requirements" Type="Self.Requirements" Multiplicity="1" />
+          <End Role="LocalRequirements" Type="Self.LocalRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirements">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalRequirements">
+              <PropertyRef Name="Requirement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalReservation_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalReservation">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalReservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalReservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Farrago584ModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocalRequirements" EntityType="Self.LocalRequirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocalReservation" EntityType="Self.LocalReservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requirements" EntityType="Self.Requirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TableReservation" EntityType="Self.TableReservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LocalRequirements_LocalReservation" Association="Self.FK_LocalRequirements_LocalReservation">
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+            <End Role="LocalRequirements" EntitySet="LocalRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalRequirements_Requirements" Association="Self.FK_LocalRequirements_Requirements">
+            <End Role="Requirements" EntitySet="Requirements" />
+            <End Role="LocalRequirements" EntitySet="LocalRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalReservation_Admin" Association="Self.FK_LocalReservation_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalReservation_User" Association="Self.FK_LocalReservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_Admin" Association="Self.FK_TableReservation_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_User" Association="Self.FK_TableReservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Farrago584Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CellphoneNumber" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isSuperuser" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="isActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LocalReservation" Relationship="Self.FK_LocalReservation_Admin" FromRole="Admin" ToRole="LocalReservation" />
+          <NavigationProperty Name="TableReservation" Relationship="Self.FK_TableReservation_Admin" FromRole="Admin" ToRole="TableReservation" />
+        </EntityType>
+        <EntityType Name="LocalRequirements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocalReservation" Type="Int32" Nullable="false" />
+          <Property Name="Requirement" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LocalReservation1" Relationship="Self.FK_LocalRequirements_LocalReservation" FromRole="LocalRequirements" ToRole="LocalReservation" />
+          <NavigationProperty Name="Requirements" Relationship="Self.FK_LocalRequirements_Requirements" FromRole="LocalRequirements" ToRole="Requirements" />
+        </EntityType>
+        <EntityType Name="LocalReservation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PersonsNumber" Type="Int32" Nullable="false" />
+          <Property Name="Confirmation" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AdminId" Type="Int32" />
+          <Property Name="UserObservation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AdminObservation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FinalPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_LocalReservation_Admin" FromRole="LocalReservation" ToRole="Admin" />
+          <NavigationProperty Name="LocalRequirements" Relationship="Self.FK_LocalRequirements_LocalReservation" FromRole="LocalReservation" ToRole="LocalRequirements" />
+          <NavigationProperty Name="User" Relationship="Self.FK_LocalReservation_User" FromRole="LocalReservation" ToRole="User" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Requirements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LocalRequirements" Relationship="Self.FK_LocalRequirements_Requirements" FromRole="Requirements" ToRole="LocalRequirements" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TableReservation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PersonsNumber" Type="Int32" Nullable="false" />
+          <Property Name="Confirmed" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AdminId" Type="Int32" />
+          <Property Name="UserObservations" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="AdminObservations" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_TableReservation_Admin" FromRole="TableReservation" ToRole="Admin" />
+          <NavigationProperty Name="User" Relationship="Self.FK_TableReservation_User" FromRole="TableReservation" ToRole="User" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Names" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BornDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CellphoneNumber" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ReservationsNumber" Type="Int16" Nullable="false" />
+          <Property Name="AssistedNumber" Type="Int16" Nullable="false" />
+          <Property Name="FaultsNumber" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="LocalReservation" Relationship="Self.FK_LocalReservation_User" FromRole="User" ToRole="LocalReservation" />
+          <NavigationProperty Name="TableReservation" Relationship="Self.FK_TableReservation_User" FromRole="User" ToRole="TableReservation" />
+        </EntityType>
+        <Association Name="FK_LocalReservation_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalReservation">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalRequirements_LocalReservation">
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="1" />
+          <End Role="LocalRequirements" Type="Self.LocalRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocalReservation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalRequirements">
+              <PropertyRef Name="LocalReservation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalRequirements_Requirements">
+          <End Role="Requirements" Type="Self.Requirements" Multiplicity="1" />
+          <End Role="LocalRequirements" Type="Self.LocalRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requirements">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalRequirements">
+              <PropertyRef Name="Requirement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocalReservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LocalReservation" Type="Self.LocalReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="LocalReservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Farrago584Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
+          <EntitySet Name="LocalRequirements" EntityType="Self.LocalRequirements" />
+          <EntitySet Name="LocalReservation" EntityType="Self.LocalReservation" />
+          <EntitySet Name="Requirements" EntityType="Self.Requirements" />
+          <EntitySet Name="TableReservation" EntityType="Self.TableReservation" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_LocalReservation_Admin" Association="Self.FK_LocalReservation_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_Admin" Association="Self.FK_TableReservation_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalRequirements_LocalReservation" Association="Self.FK_LocalRequirements_LocalReservation">
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+            <End Role="LocalRequirements" EntitySet="LocalRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalRequirements_Requirements" Association="Self.FK_LocalRequirements_Requirements">
+            <End Role="Requirements" EntitySet="Requirements" />
+            <End Role="LocalRequirements" EntitySet="LocalRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocalReservation_User" Association="Self.FK_LocalReservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="LocalReservation" EntitySet="LocalReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_User" Association="Self.FK_TableReservation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Farrago584ModelStoreContainer" CdmEntityContainer="Farrago584Entities">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="Farrago584Model.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CellphoneNumber" ColumnName="CellphoneNumber" />
+                <ScalarProperty Name="isSuperuser" ColumnName="isSuperuser" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalRequirements">
+            <EntityTypeMapping TypeName="Farrago584Model.LocalRequirements">
+              <MappingFragment StoreEntitySet="LocalRequirements">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="LocalReservation" ColumnName="LocalReservation" />
+                <ScalarProperty Name="Requirement" ColumnName="Requirement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalReservation">
+            <EntityTypeMapping TypeName="Farrago584Model.LocalReservation">
+              <MappingFragment StoreEntitySet="LocalReservation">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PersonsNumber" ColumnName="PersonsNumber" />
+                <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="UserObservation" ColumnName="UserObservation" />
+                <ScalarProperty Name="AdminObservation" ColumnName="AdminObservation" />
+                <ScalarProperty Name="FinalPrice" ColumnName="FinalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requirements">
+            <EntityTypeMapping TypeName="Farrago584Model.Requirements">
+              <MappingFragment StoreEntitySet="Requirements">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ReqName" ColumnName="ReqName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableReservation">
+            <EntityTypeMapping TypeName="Farrago584Model.TableReservation">
+              <MappingFragment StoreEntitySet="TableReservation">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PersonsNumber" ColumnName="PersonsNumber" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="UserObservations" ColumnName="UserObservations" />
+                <ScalarProperty Name="AdminObservations" ColumnName="AdminObservations" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="Farrago584Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Names" ColumnName="Names" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="BornDate" ColumnName="BornDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CellphoneNumber" ColumnName="CellphoneNumber" />
+                <ScalarProperty Name="ReservationsNumber" ColumnName="ReservationsNumber" />
+                <ScalarProperty Name="AssistedNumber" ColumnName="AssistedNumber" />
+                <ScalarProperty Name="FaultsNumber" ColumnName="FaultsNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

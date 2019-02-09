@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    if (Session["userId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<div class="row text-center">
+    <div class="col-lg-4">
+        <span>Bienvenido </span>@{ if (Session["userFullName"] != null)
+            { @Session["userFullName"].ToString() } }
+    </div>
+    <div class="col-lg-4">
+        <span>Reservas Pendientes: </span>@{ if (Session["userFullName"] != null)
+            { @Session["userReservations"].ToString() } }
+    </div>
+    <div class="col-lg-4">
+        <span>Faltas a Reservaciones: </span>@{ if (Session["userFullName"] != null)
+            { @Session["userFaults"].ToString() } }
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-4">
+        @Html.ActionLink("Reservar Mesa", "Create", "TableReservation", "", new { @class = "btn btn-block btn-primary" })
+    </div>
+    <div class="col-lg-4">
+        @Html.ActionLink("Reservar Local", "Create", "LocalReservation", "", new { @class = "btn btn-block btn-warning" })
+    </div>
+    <div class="col-lg-4">
+        @Html.ActionLink("Contáctanos", "Index", "TableReservation", new { @class = "btn btn-block btn-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Visitanos</h2>
+        <p>
+            Horario de Atención:
+            <ul>
+                <li>Todos los días: 10 a.m. - Media Noche</li>
+            </ul>
+        </p>
+        <p>
+            <a class="btn btn-default" href="#">
+                <img src="~/Content/img/logoFondo.jpg" alt="Baner" width="80%" />
+            </a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Ubícanos</h2>
+        <p>Jr. Belén #584 -  Cajamarca</p>
+        <p>
+            <a class="" href="#">
+                <img src="~/Content/img/map.png" alt="Map" width="100%" />
+            </a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Disfruta</h2>
+        <p>La mejor opción gastronómica en la ciudad de Cajamarca</p>
+        <p>
+            <a class="btn btn-default" href="#">
+                <img src="~/Content/img/banner.jpg" alt="Baner" width="100%" />
+            </a>
+        </p>
+    </div>
+</div>

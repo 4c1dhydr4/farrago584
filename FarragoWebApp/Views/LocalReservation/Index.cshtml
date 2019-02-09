@@ -1,0 +1,125 @@
+﻿@model IEnumerable<FarragoWebApp.Models.LocalReservation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mis Reservas - Eventos</h2>
+
+<p>
+    @Html.ActionLink("Solicitar Reserva", "Create")
+</p>
+<table class="table" id="localReservationList">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonsNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserObservation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdminObservation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinalPrice)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    <h4>@Html.DisplayFor(modelItem => item.PersonsNumber)</h4>
+                </td>
+                <td>
+                    @{
+                        if (item.Confirmation == "N")
+                        {
+                            <span class="text-danger">No Confirmado</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">Confirmado</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (item.Status == "P")
+                        {
+                            <span class="text-primary">Pendiente</span>
+                        }
+                        else if (item.Status == "C")
+                        {
+                            <span class="text-warning">Cancelado</span>
+                        }
+                        else if (item.Status == "F")
+                        {
+                            <span class="text-danger">No Asistida</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">Asistido</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @FarragoWebApp.Controllers.TableReservationController.AdminContact((int)item.AdminId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserObservation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminObservation)
+                </td>
+                <td>
+                    S/@Html.DisplayFor(modelItem => item.FinalPrice).00
+                </td>
+                <td>
+                    <table class="table">
+                        <tr>
+                            @{
+                                if (item.Status == "P")
+                                {
+                                    <td>@Html.ActionLink("Modificar Reserva", "Edit", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })</td>
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td>@Html.ActionLink("Detalles", "Details", new { id = item.id }, new { @class = "btn btn-primary btn-sm" })</td>
+                        </tr>
+                        <tr>
+                            @{
+                                if (item.Status == "P")
+                                {
+                                    <td>@Html.ActionLink("Cancelar Reserva", "Cancel", new { id = item.id }, new { @class = "cancelBtn btn btn-danger btn-sm" })</td>
+                                }
+                            }
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

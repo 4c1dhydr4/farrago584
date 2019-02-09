@@ -1,0 +1,48 @@
+﻿@model FarragoWebApp.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.10.18/datatables.min.css" />
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .backGroud {
+            background-image: url("/Content/img/register2.jpg");
+            background-color: rgba(1,1,1,.1);
+            background-position: top;
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur;
+        }
+
+        .text-white {
+            color: white;
+        }
+    </style>
+</head>
+<body class="backGroud">
+    <div class="row text-white">
+        <div class="col-md-5 col-md-offset-3">
+            <h2>Gracias por Registrarse en nuestro sistema de Reservas Online</h2>
+            <ul>
+                <li>Nombres: @Model.FullName</li>
+                <li>Usuario: @Model.Username</li>
+            </ul>
+            <h4>Guarde su usuario y contraseña en un lugar seguro</h4>
+            <label class="text-success">@Html.ActionLink("Ingresar", "Index", "Login")</label>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

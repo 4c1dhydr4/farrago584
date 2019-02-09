@@ -1,0 +1,83 @@
+﻿@model FarragoWebApp.Models.Admin
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login - Fárrago584</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .backGroud {
+            background-image: url("/Content/img/loginAdmin.jpg");
+            background-position: top;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        #login-div {
+            position: absolute;
+            left: 40%;
+            top: 40%;
+            border: 10px solid white;
+            padding: 10px 10px;
+            background: rgba(255, 255, 255,.8);
+        }
+
+        .title {
+            color: black;
+        }
+    </style>
+</head>
+<body class="backGroud">
+    <div id="login-div">
+        @using (Html.BeginForm("Autherize", "Admin", FormMethod.Post))
+        {
+            <table class="form-group">
+                <tr>
+                    <td></td>
+                    <td><h2 class="title">Administración</h2></td>
+                </tr>
+                <tr>
+                    <td class="title">@Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "colntrol-label col-md-2" })</td>
+                    <td>@Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>@Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })</td>
+                </tr>
+                <tr>
+                    <td class="title">@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "colntrol-label col-md-2" })</td>
+                    <td>@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" name="name" value="Ingresar" class="btn btn-primary" />
+                        <input type="reset" name="name" value="Cancelar" class="btn btn-danger" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

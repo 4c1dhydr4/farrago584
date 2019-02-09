@@ -1,0 +1,87 @@
+﻿@model IEnumerable<FarragoWebApp.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Administración de Usuarios</h2>
+
+<p>
+    @Html.ActionLink("Registrar Usuario", "Create")
+</p>
+<table class="table" id="userlist">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DNI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellphoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationsNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssistedNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FaultsNumber)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DNI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellphoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationsNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssistedNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FaultsNumber)
+            </td>
+            <td>
+                <table class="table">
+                    <tr>
+                        <td>@Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-primary btn-sm" })</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.ActionLink("Eliminar", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Farrago584ModelStoreContainer" CdmEntityContainer="Farrago584Entities">
+    <EntitySetMapping Name="Admin">
+      <EntityTypeMapping TypeName="Farrago584Model.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CellphoneNumber" ColumnName="CellphoneNumber" />
+          <ScalarProperty Name="isSuperuser" ColumnName="isSuperuser" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocalRequirements">
+      <EntityTypeMapping TypeName="Farrago584Model.LocalRequirements">
+        <MappingFragment StoreEntitySet="LocalRequirements">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="LocalReservation" ColumnName="LocalReservation" />
+          <ScalarProperty Name="Requirement" ColumnName="Requirement" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocalReservation">
+      <EntityTypeMapping TypeName="Farrago584Model.LocalReservation">
+        <MappingFragment StoreEntitySet="LocalReservation">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PersonsNumber" ColumnName="PersonsNumber" />
+          <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
+          <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+          <ScalarProperty Name="UserObservation" ColumnName="UserObservation" />
+          <ScalarProperty Name="AdminObservation" ColumnName="AdminObservation" />
+          <ScalarProperty Name="FinalPrice" ColumnName="FinalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requirements">
+      <EntityTypeMapping TypeName="Farrago584Model.Requirements">
+        <MappingFragment StoreEntitySet="Requirements">
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ReqName" ColumnName="ReqName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TableReservation">
+      <EntityTypeMapping TypeName="Farrago584Model.TableReservation">
+        <MappingFragment StoreEntitySet="TableReservation">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PersonsNumber" ColumnName="PersonsNumber" />
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+          <ScalarProperty Name="UserObservations" ColumnName="UserObservations" />
+          <ScalarProperty Name="AdminObservations" ColumnName="AdminObservations" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="Farrago584Model.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Names" ColumnName="Names" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="BornDate" ColumnName="BornDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CellphoneNumber" ColumnName="CellphoneNumber" />
+          <ScalarProperty Name="ReservationsNumber" ColumnName="ReservationsNumber" />
+          <ScalarProperty Name="AssistedNumber" ColumnName="AssistedNumber" />
+          <ScalarProperty Name="FaultsNumber" ColumnName="FaultsNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

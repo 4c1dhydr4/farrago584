@@ -1,0 +1,286 @@
+﻿@model FarragoWebApp.Models.Admin
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Administración</h2>
+
+
+<div class="row text-center">
+    <div class="col-lg-4">
+        <span>Bienvenido </span>@{ if (Session["userFullName"] != null)
+            {<span class="text-primary">@Session["userFullName"].ToString() </span> } }
+    </div>
+    <div class="col-lg-4">
+        <span>Reservas por Confirmar: </span>@{ if (Session["userFullName"] != null)
+            { <span class="text-danger"> @Session["pendReservations"].ToString() </span>} }
+    </div>
+    <div class="col-lg-4">
+        <span>Reservas Pendientes: </span>@{ if (Session["userFullName"] != null)
+            { @Session["proxReservations"].ToString() } }
+    </div>
+</div>
+<br />
+<div class="row">
+    <h4>Reservaciones de Mesa Pendientes</h4>
+    <table class="table text-center" id="tableReservationList">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>
+                    Fecha de Reserva
+                </th>
+                <th>
+                    Hora de Reserva
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Número de Personas
+                </th>
+                <th>
+                    Confirmación
+                </th>
+                <th>
+                    Observaciones del Cliente
+                </th>
+                <th>
+                    Comentariosdel Administrador
+                </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.tableReservationsPend)
+            {
+            <tr>
+                <td>
+                    @Html.ActionLink(@FarragoWebApp.Controllers.UserController.UserName((int)item.UserId), "UserProfile", "User", new { id = item.UserId }, "")
+                </td>
+                <td>
+                    <h4>@Html.DisplayFor(modelItem => item.DateTime)</h4>
+                </td>
+                <td>
+                    <h4>@Html.DisplayFor(modelItem => item.FullHour)</h4>
+                </td>
+                <td>
+                    @{
+                        if (item.Status == "P")
+                        {
+                            <span class="text-primary">Reserva Pendiente</span>
+                        }
+                        else if (item.Status == "C")
+                        {
+                            <span class="text-warning">Reserva Cancelada</span>
+                        }
+                        else if (item.Status == "F")
+                        {
+                            <span class="text-danger">No Asistida</span>
+                        }
+                        else
+                        {
+                            <span class="text-success">Reserva Asistida</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <h4>@Html.DisplayFor(modelItem => item.PersonsNumber)</h4>
+                </td>
+                <td>
+                    @{
+                        if (item.Confirmed == "C")
+                        {
+                            <span class="text-success">Confirmada</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Por Confirmar</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserObservations)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminObservations)
+                </td>
+                <td>
+                    <table class="table">
+                        <tr>
+                            <td>@Html.ActionLink("Confirmar Reserva", "Confirm", "TableReservation", new { id = item.id }, new { @class = "btn btn-success btn-sm" })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.ActionLink("Marcar Asistencia", "Asisted", "TableReservation", new { id = item.id }, new { @class = "btn btn-primary btn-sm" })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.ActionLink("Marcar Falta", "Fault", "TableReservation", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.ActionLink("Detalles", "DetailsAdmin", "TableReservation", new { id = item.id }, new { @class = "btn btn-info btn-sm" })</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <h4>Reservas de Local Pendientes</h4>
+    <table class="table" id="localReservationList">
+        <thead>
+            <tr>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Fecha de Reserva
+                </th>
+                <th>
+                    N° de Personas
+                </th>
+                <th>
+                    Confirmación
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Observaciones del Usuario
+                </th>
+                <th>
+                    Comentarios de la Administración
+                </th>
+                <th>
+                    Costro del Evento
+                </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.localReservationsPend)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(@FarragoWebApp.Controllers.UserController.UserName((int)item.UserId), "UserProfile", "User", new { id = item.UserId }, "")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        <h4>@Html.DisplayFor(modelItem => item.PersonsNumber)</h4>
+                    </td>
+                    <td>
+                        @{
+                            if (item.Confirmation == "N")
+                            {
+                                <span class="text-danger">No Confirmado</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Confirmado</span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.Status == "P")
+                            {
+                                <span class="text-primary">Pendiente</span>
+                            }
+                            else if (item.Status == "C")
+                            {
+                                <span class="text-warning">Cancelado</span>
+                            }
+                            else if (item.Status == "F")
+                            {
+                                <span class="text-danger">No Asistida</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Asistido</span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserObservation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminObservation)
+                    </td>
+                    <td>
+                        S/@Html.DisplayFor(modelItem => item.FinalPrice).00
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tr>
+                                <td>@Html.ActionLink("Confirmar Reserva", "Confirm", "LocalReservation", new { id = item.id }, new { @class = "btn btn-success btn-sm" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.ActionLink("Marcar Asistencia", "Asisted", "LocalReservation", new { id = item.id }, new { @class = "btn btn-primary btn-sm" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.ActionLink("Marcar Falta", "Fault", "LocalReservation", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.ActionLink("Detalles", "DetailsAdmin", "LocalReservation", new { id = item.id }, new { @class = "btn btn-info btn-sm" })</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-4">
+        @Html.ActionLink("Reservar Mesa", "Create", "TableReservation", "", new { @class = "btn btn-block btn-primary" })
+    </div>
+    <div class="col-lg-4">
+        @Html.ActionLink("Reservar Local", "Create", "LocalReservation", "", new { @class = "btn btn-block btn-warning" })
+    </div>
+    <div class="col-lg-4">
+        @Html.ActionLink("Contáctanos", "Index", "TableReservation", new { @class = "btn btn-block btn-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Visitanos</h2>
+        <p>
+            Horario de Atención:
+            <ul>
+                <li>Todos los días: 10 a.m. - Media Noche</li>
+            </ul>
+        </p>
+        <p>
+            <a class="btn btn-default" href="#">
+                <img src="~/Content/img/logoFondo.jpg" alt="Baner" width="80%" />
+            </a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Ubícanos</h2>
+        <p>Jr. Belén #584 -  Cajamarca</p>
+        <p>
+            <a class="" href="#">
+                <img src="~/Content/img/map.png" alt="Map" width="100%" />
+            </a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Disfruta</h2>
+        <p>La mejor opción gastronómica en la ciudad de Cajamarca</p>
+        <p>
+            <a class="btn btn-default" href="#">
+                <img src="~/Content/img/banner.jpg" alt="Baner" width="100%" />
+            </a>
+        </p>
+    </div>
+</div>
+

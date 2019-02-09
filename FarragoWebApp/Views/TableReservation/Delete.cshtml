@@ -1,0 +1,113 @@
+﻿@model FarragoWebApp.Models.TableReservation
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TableReservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Session["userFullName"].ToString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonsNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonsNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Confirmed)
+        </dt>
+
+        <dd>
+            @{ if (Model.Confirmed == "N")
+                {
+                    <span>No</span>
+                }
+                else
+                {
+                    <span>Si</span>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserObservations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserObservations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminObservations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminObservations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @{ if (Model.Status == "A")
+                {
+                    <span>Asistida</span>
+                }
+                else
+                {
+                    <span>Pendiente</span>
+                }
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Mis Reservas", "Index", "", new { @class = "btn btn-default" })
+    </div>
+    }
+</div>

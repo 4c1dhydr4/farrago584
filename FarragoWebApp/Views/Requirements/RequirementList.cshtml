@@ -1,0 +1,51 @@
+﻿@model FarragoWebApp.Models.RequirementList
+
+@{
+    ViewBag.Title = "Lista de Requerimientos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Requerimientos para el Evento</h2>
+
+@using (Html.BeginForm("RequirementList", "Requirements"))
+{
+    <div class="form-horizontal">
+        <h4>Seleccione la lista de requerimientos que desee tener para su evento</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Lista de Requerimientos Disponibles</label>
+            <div class="col-md-4">
+                <table class="table table-hover">
+                    <tr class="text-success">
+                        <td>Seleccionar</td>
+                        <td>Requerimiento</td>
+                        <td>Descripción</td>
+                        <td>Costo</td>
+                        <td></td>
+                    </tr>
+                    @for(int i=0; i<Model.RequirementsList.Count; i++)
+                    {
+                    <tr>
+                        <td>@Html.CheckBoxFor(m => Model.RequirementsList[i].isChecked)</td>
+                        <td>@Model.RequirementsList[i].ReqName</td>
+                        <td>@Model.RequirementsList[i].Description</td>
+                        <td>S/@Model.RequirementsList[i].Cost.00</td>
+                        <td>@Html.HiddenFor(m => Model.RequirementsList[i].id)</td>
+                        <td>@Html.HiddenFor(m => Model.RequirementsList[i].Cost)</td>
+                    </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Solicitar Lista" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

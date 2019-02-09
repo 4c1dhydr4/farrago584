@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="49279b8ae53d4c3c91516f1044de405a" Name="Diagram1" ZoomLevel="66">
+        <EntityTypeShape EntityType="Farrago584Model.Admin" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Farrago584Model.LocalRequirements" Width="1.5" PointX="4.625" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Farrago584Model.LocalReservation" Width="1.5" PointX="3.125" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Farrago584Model.Requirements" Width="1.5" PointX="7.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Farrago584Model.TableReservation" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Farrago584Model.User" Width="1.5" PointX="10.875" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="Farrago584Model.FK_LocalReservation_Admin" ManuallyRouted="false" />
+        <AssociationConnector Association="Farrago584Model.FK_TableReservation_Admin" ManuallyRouted="false" />
+        <AssociationConnector Association="Farrago584Model.FK_LocalRequirements_LocalReservation" ManuallyRouted="false" />
+        <AssociationConnector Association="Farrago584Model.FK_LocalRequirements_Requirements" ManuallyRouted="false" />
+        <AssociationConnector Association="Farrago584Model.FK_LocalReservation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Farrago584Model.FK_TableReservation_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

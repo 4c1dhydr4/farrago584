@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.10.18/datatables.min.css" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @{
+        if (Session["userId"] == null)
+        {
+            Response.Redirect("~/Login/Index");
+        }
+    }
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Fárrago584", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-danger" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Reservaciones de Mesa", "Index", "TableReservation")</li>
+                    <li>@Html.ActionLink("Reservaciones de Local", "Index", "LocalReservation")</li>
+                    <li>@Html.ActionLink("Mi Perfil", "Details", "User")</li>
+                    <li>@Html.ActionLink("Contáctanos", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Salir", "LogOut", "Login")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Fárrago584@Modelamiento y Análisis de Software</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/DataTables")
+    @Scripts.Render("~/bundles/datatables")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('#userlist').DataTable();
+            $('#requirementList').DataTable();
+            $('#tableReservationList').DataTable();
+            $('#localReservationList').DataTable();
+            $(".cancelBtn").click(function (event) {
+                if (!confirm('¿Estás seguro de cancelar la Reserva?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
